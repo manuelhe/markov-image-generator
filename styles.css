@@ -1,0 +1,24 @@
+/*
+ * This CSS uses Tailwind-like classes for styling
+ * to ensure a clean, modern, and responsive layout.
+ * The classes are included directly in the HTML file for simplicity.
+ */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    max-width: 960px;
+}
+
+canvas {
+    image-rendering: pixelated; /* Ensures the generated pixel art looks sharp */
+    max-width: 100%;
+    height: auto;
+    background-color: #1f2937; /* Dark background for canvas */
+}
+
+/* Custom styling for file input for better visual appeal */
+input[type="file"]::file-selector-button {
+    cursor: pointer;
+}
