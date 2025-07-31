@@ -9,12 +9,6 @@
     const statusLog = document.getElementById('statusLog');
     const canvas = document.getElementById('generatedImageCanvas');
     const ctx = canvas.getContext('2d');
-    const geminiPromptInput = document.getElementById('geminiPrompt');
-    const generateGeminiImageBtn = document.getElementById('generateGeminiImageBtn');
-    const geminiImageContainer = document.getElementById('geminiImageContainer');
-    const geminiGeneratedImg = document.getElementById('geminiGeneratedImg');
-    const describeImageBtn = document.getElementById('describeImageBtn');
-    const imageDescriptionDiv = document.getElementById('imageDescription');
 
     // --- Global State ---
     let baseImagesData = [];
@@ -180,11 +174,10 @@
 
         processBtn.disabled = true;
         generateBtn.disabled = true;
-        describeImageBtn.disabled = true;
         updateStatus('Starting image processing...');
 
         const tempCanvas = document.createElement('canvas');
-        const tempCtx = tempCanvas.getContext('2d');
+        const tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
         tempCanvas.width = targetWidth;
         tempCanvas.height = targetHeight;
 
@@ -234,7 +227,6 @@
         updateStatus(`Markov chain learning complete. Model has ${Object.keys(markovChainModel).length} unique colors. You can now generate an image.`);
         processBtn.disabled = false;
         generateBtn.disabled = false;
-        describeImageBtn.disabled = false;
     }
 
     /**
@@ -313,7 +305,6 @@
         updateStatus('Generating new image...');
         generateBtn.disabled = true;
         processBtn.disabled = true;
-        describeImageBtn.disabled = true;
 
         const paletteKeys = Object.keys(markovChainModel);
         let startColorKey = paletteKeys[Math.floor(Math.random() * paletteKeys.length)];
@@ -385,129 +376,11 @@
         updateStatus('Image generation complete!');
         generateBtn.disabled = false;
         processBtn.disabled = false;
-        describeImageBtn.disabled = false;
-    }
-
-    /**
-     * Generates an image using the Gemini API based on a text prompt.
-     */
-    async function generateImageWithGemini() {
-        const userPrompt = geminiPromptInput.value;
-        if (!userPrompt) {
-            updateStatus("Please enter a prompt to generate an image.");
-            return;
-        }
-
-        generateGeminiImageBtn.disabled = true;
-        updateStatus("Generating image with Gemini...");
-
-        try {
-            const payload = {
-                instances: { prompt: userPrompt },
-                parameters: { "sampleCount": 1 }
-            };
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-
-            // Implemented exponential backoff for retries
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const result = await response.json();
-            
-            if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                geminiGeneratedImg.src = imageUrl;
-                geminiImageContainer.style.display = 'flex';
-                updateStatus("Gemini image generated successfully. It has been added to the base images for processing.");
-                
-                // Add the generated image to the processing queue immediately
-                // This is a seamless integration
-                await processImages([imageUrl, ...Array.from(imageFilesInput.files)]);
-
-            } else {
-                updateStatus("Failed to generate image from Gemini. Please try again.");
-                console.error("API response error:", result);
-            }
-        } catch (error) {
-            updateStatus("An error occurred while generating the image.");
-            console.error(error);
-        } finally {
-            generateGeminiImageBtn.disabled = false;
-        }
-    }
-
-    /**
-     * Describes the generated image using the Gemini API.
-     */
-    async function describeImageWithGemini() {
-        if (!canvas.width || !canvas.height) {
-            updateStatus("Please generate an image first.");
-            return;
-        }
-        
-        describeImageBtn.disabled = true;
-        imageDescriptionDiv.style.display = 'block';
-        imageDescriptionDiv.innerHTML = '<p class="text-center">Generating description...</p>';
-
-        try {
-            const imageData = canvas.toDataURL("image/png");
-            const base64ImageData = imageData.split(',')[1];
-            
-            const prompt = "Describe this pixel art image concisely in one sentence.";
-            
-            const payload = {
-                contents: [{
-                    role: "user",
-                    parts: [
-                        { text: prompt },
-                        {
-                            inlineData: {
-                                mimeType: "image/png",
-                                data: base64ImageData
-                            }
-                        }
-                    ]
-                }],
-            };
-
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            
-            // Implemented exponential backoff for retries
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const result = await response.json();
-            
-            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts) {
-                const text = result.candidates[0].content.parts[0].text;
-                imageDescriptionDiv.innerHTML = `<p>${text}</p>`;
-                updateStatus("Image description complete.");
-            } else {
-                imageDescriptionDiv.innerHTML = "<p>Failed to get a description. Please try again.</p>";
-                console.error("API response error:", result);
-            }
-
-        } catch (error) {
-            imageDescriptionDiv.innerHTML = "<p>An error occurred while describing the image.</p>";
-            console.error(error);
-        } finally {
-            describeImageBtn.disabled = false;
-        }
     }
 
 
     // --- Event Listeners ---
     processBtn.addEventListener('click', () => processImages(Array.from(imageFilesInput.files)));
     generateBtn.addEventListener('click', generateImage);
-    generateGeminiImageBtn.addEventListener('click', generateImageWithGemini);
-    describeImageBtn.addEventListener('click', describeImageWithGemini);
 
 })();
