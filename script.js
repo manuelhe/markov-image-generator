@@ -6,6 +6,7 @@
     const colorCountInput = document.getElementById('colorCount');
     const processBtn = document.getElementById('processBtn');
     const generateBtn = document.getElementById('generateBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
     const statusLog = document.getElementById('statusLog');
     const canvas = document.getElementById('generatedImageCanvas');
     const ctx = canvas.getContext('2d');
@@ -174,6 +175,7 @@
 
         processBtn.disabled = true;
         generateBtn.disabled = true;
+        downloadBtn.disabled = true;
         updateStatus('Starting image processing...');
 
         const tempCanvas = document.createElement('canvas');
@@ -305,6 +307,7 @@
         updateStatus('Generating new image...');
         generateBtn.disabled = true;
         processBtn.disabled = true;
+        downloadBtn.disabled = true;
 
         const paletteKeys = Object.keys(markovChainModel);
         let startColorKey = paletteKeys[Math.floor(Math.random() * paletteKeys.length)];
@@ -376,11 +379,24 @@
         updateStatus('Image generation complete!');
         generateBtn.disabled = false;
         processBtn.disabled = false;
+        downloadBtn.disabled = false;
+    }
+
+    /**
+     * Downloads the currently displayed canvas image.
+     */
+    function downloadImage() {
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'markov-generated-image.png';
+        link.click();
     }
 
 
     // --- Event Listeners ---
     processBtn.addEventListener('click', () => processImages(Array.from(imageFilesInput.files)));
     generateBtn.addEventListener('click', generateImage);
+    downloadBtn.addEventListener('click', downloadImage);
 
 })();
