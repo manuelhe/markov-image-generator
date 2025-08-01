@@ -31,6 +31,28 @@
 
                 <!-- Parameters Section -->
                 <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label for="colorCount" class="block text-sm font-medium text-gray-400 mb-2">Target Color Count:</label>
+                        <input type="number" id="colorCount" value="16" min="2" max="256" class="w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="col-span-2">
+                        <button id="processBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto">
+                            Process Images & Learn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status Log -->
+        <div id="statusLog" class="bg-gray-800 p-4 rounded-lg shadow-inner mb-8 min-h-[50px] text-gray-300">
+            Awaiting instructions...
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-xl mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Training & Parameters</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+                <div class="grid grid-cols-2 gap-4">
                     <div class="flex flex-col">
                         <label for="targetWidth" class="block text-sm font-medium text-gray-400 mb-2">Target Width:</label>
                         <input type="number" id="targetWidth" value="64" min="16" max="256" class="w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500">
@@ -39,35 +61,21 @@
                         <label for="targetHeight" class="block text-sm font-medium text-gray-400 mb-2">Target Height:</label>
                         <input type="number" id="targetHeight" value="64" min="16" max="256" class="w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                    <div class="col-span-2">
-                        <label for="colorCount" class="block text-sm font-medium text-gray-400 mb-2">Target Color Count:</label>
-                        <input type="number" id="colorCount" value="16" min="2" max="256" class="w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <button id="generateBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto" disabled>
+                        Generate New Image
+                    </button>
                 </div>
             </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-            <button id="processBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto">
-                Process Images & Learn
-            </button>
-            <button id="generateBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto" disabled>
-                Generate New Image
-            </button>
-            <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto" disabled>
-                Download Image
-            </button>
-        </div>
-        
-        <!-- Status Log -->
-        <div id="statusLog" class="bg-gray-800 p-4 rounded-lg shadow-inner mb-8 min-h-[50px] text-gray-300">
-            Awaiting instructions...
         </div>
 
         <!-- Canvas Output and Description -->
         <div class="bg-gray-800 p-4 rounded-lg shadow-xl flex flex-col items-center">
             <canvas id="generatedImageCanvas" class="border-2 border-gray-600 rounded-md shadow-2xl mb-4"></canvas>
+            <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors w-full sm:w-auto" disabled>
+                Download Image
+            </button>
         </div>
 
     </div>
