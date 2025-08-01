@@ -6,7 +6,7 @@ This project is a web-based application that generates unique pixel art images u
 
 Test this application online [here](https://morra.co/markov-image-generator/).
 
-![Generated example image](https://github.com/manuelhe/markov-image-generator/blob/main/android-chrome-512x512.png)
+![Generated example image](https://github.com/manuelhe/markov-image-generator/blob/main/assets/android-chrome-512x512.png)
 
 ## Features
 
