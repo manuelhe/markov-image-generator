@@ -31,7 +31,7 @@
     "email": "manuel.he@gmail.com"
   },
   "main": "index.html",
-  "dependencies": {
+  "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
     "tailwindcss": "^4.1.11"
   }

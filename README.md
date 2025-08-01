@@ -54,7 +54,7 @@ The process of generating a new image can be broken down into the following step
 
 -   `index.html`: The main HTML file that defines the structure of the web application.
 -   `script.js`: Contains all the JavaScript code for the application, including the UI logic, image processing, and Markov chain implementation.
--   `styles.css`: The main stylesheet for the application.
+-   `input.css`: The main stylesheet for the application.
 -   `README.md`: This file.
 
 ## Future Improvements

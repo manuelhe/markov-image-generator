@@ -1,0 +1,25 @@
+{
+  "theme_color": "#101828",
+  "background_color": "#101828",
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "en-US",
+  "name": "Markov Image Generator",
+  "short_name": "markov-image-generator",
+  "start_url": "https://morra.co/markov-image-generator",
+  "description": "Web-based application that generates unique pixel art images using a Markov chain model. Users can upload their own images to train the model, and then generate new images based on the learned patterns.",
+  "id": "https://morra.co/markov-image-generator",
+  "icons": [
+    {
+      "src": "/assets/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
