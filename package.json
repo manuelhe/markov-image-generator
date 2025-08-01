@@ -1,0 +1,34 @@
+{
+  "name": "markov-image-generator",
+  "version": "1.0.0",
+  "description": "Markov chain image generator",
+  "keywords": [
+    "Markov",
+    "Chains",
+    "Image",
+    "Generation",
+    "Pixel",
+    "Art",
+    "Color",
+    "Quantization",
+    "Machine",
+    "Learning",
+    "Image",
+    "Processing",
+    "JavaScript"
+  ],
+  "homepage": "https://github.com/manuelhe/markov-image-generator#readme",
+  "bugs": {
+    "url": "https://github.com/manuelhe/markov-image-generator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelhe/markov-image-generator.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Manuel Herrera",
+    "email": "manuel.he@gmail.com"
+  },
+  "main": "index.html"
+}
